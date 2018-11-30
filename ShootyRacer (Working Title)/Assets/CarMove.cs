@@ -23,7 +23,8 @@ public class CarMove : MonoBehaviour {
 	void Update () {
 		Speed += (Input.GetAxis ("Vertical")-0.5f) * Time.deltaTime * Acceleration;
 		Speed = Mathf.Clamp (Speed, 0, MaxSpeed);
-		RB.velocity = transform.forward * Speed;
+		Vector3 GoForce = transform.forward * Speed;
+		RB.velocity = new Vector3 (GoForce.x, RB.velocity.y, GoForce.z);
 		RB.angularVelocity = transform.up * Input.GetAxis ("Horizontal")*(Mathf.Abs(Input.GetAxis ("Vertical")))*RotSpeed;
 		
 		Cam.position = Vector3.Lerp (Cam.position, transform.position+(transform.forward*Pos.z)+(transform.up*Pos.y), CamSpeed*Time.deltaTime);
